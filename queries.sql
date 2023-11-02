@@ -28,10 +28,6 @@ SELECT * FROM animals WHERE NOT name = 'Gabumon';
 /* Find all animals with a weight between 10.4kg and 17.3kg (including the animals with the weights that equals precisely 10.4kg or 17.3kg) */
 SELECT * FROM animals WHERE weight_kg >= 10.4 AND weight_kg <= 17.3;
 
-
-
-ALTER TABLE animals ADD species varchar(100);
-
 BEGIN;
 UPDATE animals SET species = 'unspecified';
 
