@@ -55,9 +55,9 @@ ADD CONSTRAINT fk_owner
 
 CREATE TABLE vets (
     vet_ID INT GENERATED ALWAYS AS IDENTITY,
-    name varchar(100),
+    full_name varchar(100),
     age INT,
-    date_birth DATE,
+    date_of_graduation DATE,
     PRIMARY KEY (vet_ID)
 );
 
