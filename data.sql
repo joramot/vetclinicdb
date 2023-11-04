@@ -44,3 +44,37 @@ UPDATE animals SET owner_id = 3 WHERE name LIKE 'Devimon' OR name LIKE 'Plantmon
 UPDATE animals SET owner_id = 4 WHERE name LIKE 'Charmander' OR name LIKE 'Squirtle' OR name LIKE 'Blossom';
 
 UPDATE animals SET owner_id = 5 WHERE name LIKE 'Angemon' OR name LIKE 'Boarmon';
+
+INSERT INTO vets (full_name, age, date_of_graduation)
+VALUES ('William Tatcher', 45, '200-04-23'),
+('Maisy Smith', 26, '2019-01-17'),
+('Stephanie Mende', 64,'1982-05-04'),
+('Jack Harkness', 38, '2008-06-08');
+
+INSERT INTO specializations (vet_ID, species_ID)
+VALUES (1, 1),
+(3, 2),
+(3,1),
+(4, 2);
+
+INSERT INTO visits (id, vet_ID, date_visit)
+VALUES (1, 1, '2020-05-24'),
+(1, 3, '2020-07-22'),
+(2, 4, '2021-02-02'),
+(3, 2, '2020-01-05'),
+(3, 2, '2020-05-08'),
+(3, 2, '2020-05-14'),
+(11, 3, '2021-05-04'),
+(12, 4, '2021-02-24'),
+(13, 2, '2019-12-21'),
+(13, 1, '2020-08-10'),
+(13, 2, '2021-07-07'),
+(14, 3, '2019-09-29'),
+(15, 4, '2020-10-03'),
+(15, 4, '2020-11-04'),
+(16, 2, '2019-01-24'),
+(16, 2, '2019-05-15'),
+(16, 2, '2020-02-27'),
+(16, 2, '2020-08-03'),
+(17, 3, '2020-05-24'),
+(17, 1, '2021-01-11');
