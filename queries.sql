@@ -1,6 +1,6 @@
 /*Queries that provide answers to the questions from all projects.*/
 
-SELECT * from animals WHERE name = 'Luna';
+/* Project 1: create animals table. */
 
 /* Write queries for the following quests: */
 
@@ -8,16 +8,16 @@ SELECT * from animals WHERE name = 'Luna';
 SELECT * FROM animals WHERE name LIKE '%mon';
 
 /* List the name of all animals born between 2016 and 2019. */
-SELECT name FROM animals WHERE date_birth BETWEEN '2016-01-01' AND '2019-12-31';
+SELECT name, date_birth FROM animals WHERE date_birth BETWEEN '2016-01-01' AND '2019-12-31';
 
 /* List the name of all animals that are neutered and have less than 3 escape attempts. */
-SELECT name FROM animals WHERE neutered = true AND escape_attempts < 3;
+SELECT name, neutered, escape_attempts FROM animals WHERE neutered = true AND escape_attempts < 3;
 
 /* List the date of birth of all animals named either "Agumon" or "Pikachu". */
-SELECT date_birth FROM animals WHERE name = 'Agumon' OR name = 'Pikachu';
+SELECT name,date_birth FROM animals WHERE name = 'Agumon' OR name = 'Pikachu';
 
 /* List name and escape attempts of animals that weigh more than 10.5kg */
-SELECT name, escape_attempts FROM animals WHERE weight_kg < 10.5;
+SELECT name, escape_attempts FROM animals WHERE weight_kg > 10.5;
 
 /* Find all animals that are neutered. */
 SELECT * FROM animals WHERE neutered = true;
@@ -28,36 +28,39 @@ SELECT * FROM animals WHERE NOT name = 'Gabumon';
 /* Find all animals with a weight between 10.4kg and 17.3kg (including the animals with the weights that equals precisely 10.4kg or 17.3kg) */
 SELECT * FROM animals WHERE weight_kg >= 10.4 AND weight_kg <= 17.3;
 
+/* Project 2: query and update animals table */
+
 BEGIN;
 UPDATE animals SET species = 'unspecified';
-
+SELECT * FROM animals;
 ROLLBACK;
+SELECT * FROM animals;
 
+BEGIN;
 UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon';
-
 UPDATE animals SET species = 'pokemon' WHERE species IS NULL;
+SELECT * FROM animals;
 
 COMMIT;
 
 BEGIN;
 DELETE FROM animals;
-
+SELECT * FROM animals;
 ROLLBACK;
+SELECT * FROM animals;
 
 COMMIT;
+SELECT * FROM animals;
 
-
+DELETE FROM animals WHERE date_birth > '2022-01-01';
 BEGIN;
 SAVEPOINT SP1;
-DELETE FROM animals WHERE date_birth > '2022-01-01';
+SELECT * FROM animals;
 UPDATE animals SET weight_kg = weight_kg*-1;
-
+SELECT * FROM animals;
 ROLLBACK TO SP1;
-END;
-
-BEGIN
-UPDATE animals SET weight_kg = weight_kg*-1;
-END;
+SELECT * FROM animals;
+UPDATE animals SET weight_kg = weight_kg*-1 WHERE weight_kg < 0;
 
 COMMIT;
 
@@ -82,29 +85,31 @@ FROM animals
 WHERE date_birth BETWEEN '1990-01-01' AND '2000-12-31'
 GROUP BY species;
 
+/* Project 3: query multiple tables.*/
+
 SELECT name
 FROM animals
 INNER JOIN owners ON animals.owner_id = owners.owner_id
 WHERE full_name = 'Melody Pond';
 
-SELECT animals.name, animals.specie_ID, species.name
+SELECT animals.name, animals.specie_id, species.name
 FROM animals
-INNER JOIN species ON animals.specie_ID = species.specie_ID
+INNER JOIN species ON animals.specie_id = species.specie_id
 WHERE species.name = 'Pokemon';
 
 SELECT owners.full_name, animals.name
 FROM owners
 LEFT JOIN animals ON owners.owner_id = animals.owner_id;
 
-SELECT species.name AS specie, COUNT(animals.specie_ID) AS Animals_Count
+SELECT species.name AS specie, COUNT(animals.specie_id) AS Animals_Count
 FROM animals
-INNER JOIN species ON animals.specie_ID = species.specie_ID
+INNER JOIN species ON animals.specie_id = species.specie_id
 GROUP BY species.name;
 
 SELECT owners.full_name, animals.name
 FROM owners
 INNER JOIN animals ON owners.owner_id = animals.owner_id
-INNER JOIN species ON animals.specie_ID = species.specie_ID
+INNER JOIN species ON animals.specie_id = species.specie_id
 WHERE owners.full_name = 'Jennifer Orwell' AND species.name = 'Digimon';
 
 SELECT owners.full_name, animals.name
@@ -118,6 +123,8 @@ LEFT JOIN animals ON owners.owner_id = animals.owner_id
 GROUP BY owners.full_name
 ORDER BY Animals_Count DESC
 LIMIT 1;
+
+/* Project 4: add "join table" for visits. */
 
 SELECT a.name AS animal
 FROM visits v
